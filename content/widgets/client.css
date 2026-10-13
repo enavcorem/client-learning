@@ -1,0 +1,90 @@
+/* ===== הבלוקים של לומדת הלקוח (שדות, בחירות, פרומפט, טיוטה) ===== */
+/* שייך לקורס, לא למנוע. צבעים — רק מהטוקנים של המנוע או מהטוקנים כאן. */
+
+:root {
+  --cl-pressed-bg: #EEF0FF;
+  --cl-warn: #A15C00;
+  --cl-warn-bg: #FFF6E5;
+  --cl-status-bg: #2E2E3A;
+  --cl-status-text: #FFFFFF;
+}
+
+.cl-field { margin-bottom: var(--space-5); }
+.cl-label { display: block; font-weight: 700; margin-bottom: var(--space-1); }
+.cl-help { color: var(--text-muted); font-size: 0.92rem; margin-bottom: var(--space-2); line-height: 1.55; }
+.cl-input { width: 100%; box-sizing: border-box; font-family: var(--font-body); line-height: 1.6; resize: vertical; }
+.cl-loading { opacity: 0.6; }
+.cl-missing { color: var(--text-faint); font-style: italic; }
+
+.cl-warn:not(:empty) {
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--cl-warn-bg);
+  color: var(--cl-warn);
+  font-size: 0.9rem;
+}
+
+/* בחירה אחת / צ'קליסט / צ'יפים */
+.cl-choices, .cl-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.cl-checks { display: flex; flex-direction: column; gap: var(--space-2); }
+.cl-choice, .cl-chip, .cl-check {
+  font: inherit;
+  cursor: pointer;
+  border: 2px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  text-align: right;
+  transition: border-color var(--duration-fast) var(--ease), background var(--duration-fast) var(--ease);
+}
+.cl-chip { border-radius: var(--radius-full); padding: var(--space-1) var(--space-3); }
+.cl-check::before { content: '☐ '; }
+.cl-check[aria-pressed="true"]::before { content: '☑ '; }
+.cl-choice[aria-pressed="true"], .cl-chip[aria-pressed="true"], .cl-check[aria-pressed="true"] {
+  border-color: var(--color-primary);
+  background: var(--cl-pressed-bg);
+  font-weight: 700;
+}
+.cl-choice:disabled, .cl-chip:disabled, .cl-check:disabled { cursor: wait; }
+
+/* פרומפט להעתקה */
+.cl-prompt { margin-bottom: var(--space-5); }
+.cl-prompt-text {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  background: var(--bg);
+  margin-bottom: var(--space-2);
+}
+
+/* הטיוטה */
+.cl-draft { font-size: 1rem; }
+.cl-meter { margin-top: var(--space-2); font-size: 0.9rem; font-weight: 500; }
+.cl-meter[data-state="ok"] { color: var(--success); }
+.cl-meter[data-state="low"], .cl-meter[data-state="high"] { color: var(--cl-warn); }
+.cl-tools { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+
+/* חיווי שמירה — קבוע בפינה */
+.cl-save-status {
+  position: fixed;
+  bottom: var(--space-4);
+  left: var(--space-4);
+  z-index: 50;
+  max-width: calc(100vw - 2 * var(--space-4));
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--cl-status-bg);
+  color: var(--cl-status-text);
+  font-size: 0.85rem;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease);
+}
+.cl-save-status.show { opacity: 0.92; }
+.cl-save-status[data-state="offline"] { background: var(--cl-warn); }
